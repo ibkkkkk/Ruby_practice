@@ -14,15 +14,22 @@ class Admin::SessionsController < Admin::Base
       administrator = Administrator.find_by("LOWER(email) = ?", @form.email.downcase)
     end
     if Admin::Authenticator.new(administrator).authenticate(@form.password)
-      session[:administrator_id] = administrator.id
-      redirect_to :admin_root
+      if administrator.suspended?
+        flash.now.alert = "停止しています"
+        render action: "new"
+      else session[:administrator_id] = administrator.id
+        flash.notice = "login!"
+        redirect_to :admin_root
+      end
     else
+      flash.now.alert = "cannot login"
       render action: "new"
     end
   end
 
   def destroy
     session.delete(:administrator_id)
+    flash.notice = "logout"
     redirect_to :admin_root
   end
 end
