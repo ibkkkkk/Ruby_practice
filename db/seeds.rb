@@ -50,3 +50,8 @@ given_names = %w{
     suspended: n == 1
   )
 end
+
+Administrator.create!(
+  email: "ibuo@example.com",
+  password: "footbar",
+)
