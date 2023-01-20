@@ -5,6 +5,12 @@ module ErrorHandlers
   rescue_from StandardError, with: :rescue500
   rescue_from ApplicationController::Forbidden, with: :rescue403
   rescue_from ApplicationController::IpAddressRejected, with: :rescue403
+  rescue_from ApplicationController::ParameterMissing, with: :rescue400
+  end
+
+  private def rescue400(e)
+    render "errors/bab_request",
+    status: 400
   end
 
   private def rescue403(e)
