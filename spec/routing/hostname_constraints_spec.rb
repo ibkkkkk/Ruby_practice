@@ -5,7 +5,7 @@ describe "routing" do
     config = Rails.application.config.combee
     url = "http://#{config[:staff][:host]}/#{config[:staff][:path]}"
     expect(get: url).to route_to(
-      host: config.[:staff][:host],
+      host: config[:staff][:host],
       controller: "staff/top",
       action: "index"
     )
@@ -15,8 +15,8 @@ describe "routing" do
     config = Rails.application.config.combee
     url = "http://#{config[:admin][:host]}/#{config[:admin][:path]}/login"
     expect(get: url).to route_to(
-      host: config[:admin][:host]
-      controller: "admin/sessions"
+      host: config[:admin][:host],
+      controller: "admin/sessions",
       action: "new"
     )
   end
@@ -27,6 +27,6 @@ describe "routing" do
 
   example "存在しないパスならroutableではない" do
     config = Rails.application.config.combee
-    expect(get: "http://#{config[:staff][::host]}/xyz").not_to be_routable
+    expect(get: "http://#{config[:staff][:host]}/xyz").not_to be_routable
   end
 end

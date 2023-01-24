@@ -1,8 +1,18 @@
 require "rails_helper"
 
-decribe "管理者による職員管理" do
+describe "管理者による職員管理" do
   let(:administrator) {
     create(:administrator) }
+
+    before do 
+      post admin_session_url,
+        params: {
+          admin_login_form: {
+            email: administrator.email,
+            password: "pw"
+          }
+        }
+    end
 
     describe "新規登録" do
       let(:params_hash) {
@@ -13,8 +23,8 @@ decribe "管理者による職員管理" do
         expect(response).to redirect_to(admin_staff_members_url)
       end
 
-      example "例外 Action::ParameterMissingが発生" do
-        expect {post admin_staff_members_url}.to raise_error(Action::ParameterMissing)
+      example "例外 ActionController::ParameterMissingが発生" do
+        expect {post admin_staff_members_url}.to raise_error(ActionController::ParameterMissing)
       end
     end
 

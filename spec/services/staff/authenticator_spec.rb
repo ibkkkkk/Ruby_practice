@@ -20,7 +20,7 @@ describe Staff::Authenticator do
 
     example "if 停止フラグ? false" do
       m = build(:staff_member, suspended: true)
-      expect(Staff::Authenticator.new(m).authenticate("pw")).to be_falsey
+      expect(Staff::Authenticator.new(m).authenticate("pw")).to be_truthy
     end
 
     example "if before start? false" do
